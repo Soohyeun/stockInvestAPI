@@ -83,8 +83,3 @@ def get_ten_days_predicton(stock_name):
 
     predictions = predict(best_model, lenData)
     return predictions.tolist()
-
-
-# predictions = get_ten_days_predicton('NVDA')
-# print(predictions)
-
