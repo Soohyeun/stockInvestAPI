@@ -49,9 +49,7 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    permissions:
-      id-token: write #This is required for requesting the JWT
-
+    
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
@@ -62,16 +60,10 @@ jobs:
         run: unzip release.zip
 
       
-      - name: Login to Azure
-        uses: azure/login@v1
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_9C8556C578584731ABC0B03600EF9395 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_3E2F7572D95349B697B4332F1128FDF5 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_932E7AFFACBB4A44A388304638430CD4 }}
-
       - name: 'Deploy to Azure Web App'
-        uses: azure/webapps-deploy@v1
+        uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
         with:
           app-name: 'stock-invest-api'
           slot-name: 'Production'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_99E797C3E5E040C3B93A5E8E230DD298 }}
