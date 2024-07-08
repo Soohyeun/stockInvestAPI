@@ -70,9 +70,8 @@ jobs:
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_932E7AFFACBB4A44A388304638430CD4 }}
 
       - name: 'Deploy to Azure Web App'
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v1
         id: deploy-to-webapp
         with:
           app-name: 'stock-invest-api'
           slot-name: 'Production'
-          
