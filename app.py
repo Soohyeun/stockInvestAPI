@@ -1,5 +1,5 @@
 from flask import Flask, make_response
-from predictive_model.train import get_ten_days_predicton
+from train import get_ten_days_predicton
 
 app = Flask(__name__)
 
@@ -16,7 +16,3 @@ def get_prediction(stockname):
     except:
         response = make_response("No Stock name", 400)
         return response
-
-
-if __name__=='__main__':
-    app.run(debug=True, port=5000)
