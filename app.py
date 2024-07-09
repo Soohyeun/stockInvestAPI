@@ -1,7 +1,9 @@
 from flask import Flask, make_response
+from flask_cors import CORS
 from train import get_ten_days_predicton
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/")
 def hello():
