@@ -66,4 +66,4 @@ jobs:
         with:
           app-name: 'stock-invest-api'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_99E797C3E5E040C3B93A5E8E230DD298 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_64B9E64AA2A64B60BEBE4043E76EA58D }}
