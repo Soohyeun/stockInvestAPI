@@ -18,3 +18,6 @@ def get_prediction(stockname):
     except:
         response = make_response("No Stock name", 400)
         return response
+
+if __name__ == "__main__":
+    app.run()

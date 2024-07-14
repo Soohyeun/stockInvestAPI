@@ -81,5 +81,8 @@ def get_ten_days_predicton(stock_name):
 
     best_model = findBestmodel(dfTrain, dfTest)
 
-    predictions = predict(best_model, lenData)
-    return predictions.tolist()
+    predictions = predict(best_model, lenData).tolist()
+    df_last_10 = stockDf[['Close']].tail(10).reset_index().to_dict(orient='records')
+    result = {'predictions': predictions, 'last10': df_last_10}
+    print(result)
+    return result
