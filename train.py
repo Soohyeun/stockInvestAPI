@@ -16,11 +16,10 @@ def getStock(stk, ttlDays):
     # For some reason, must add 1 day to get current stock prices
     # during trade hours. (Prices are about 15 min behind actual prices.)
     dtNow     = dt + datetime.timedelta(days=1)
-    dtNowStr  = dtNow.strftime("%Y-%m-%d")
     dtPast    = dt + datetime.timedelta(days=-numDays)
-    dtPastStr = dtPast.strftime("%Y-%m-%d")
-    yfin.pdr_override()
-    df = pdr.get_data_yahoo(stk, start=dtPastStr, end=dtNowStr)
+    ticker = yfin.Ticker(stk)
+    df = ticker.history(start=dtPast, end=dtNow, interval="1d")
+    df = df.reset_index()
     return df
 
 
@@ -72,8 +71,8 @@ def get_ten_days_predicton(stock_name):
     NUM_DAYS = 1000
     TEST_DAYS = 10
     ##################################################################
-
     stockDf = getStock(stock_name, NUM_DAYS)
+    print('stock df:', stockDf)
     lenData = len(stockDf)
 
     dfTrain = stockDf.iloc[0:lenData - TEST_DAYS, :]
@@ -82,7 +81,10 @@ def get_ten_days_predicton(stock_name):
     best_model = findBestmodel(dfTrain, dfTest)
 
     predictions = predict(best_model, lenData).tolist()
-    df_last_10 = stockDf[['Close']].tail(10).reset_index().to_dict(orient='records')
-    result = {'predictions': predictions, 'last10': df_last_10}
+    df_last_10 = stockDf[['Date', 'Close']].tail(10).reset_index()
+    df_last_10['Date'] = df_last_10['Date'].apply(lambda x: x.strftime('%Y-%m-%d'))
+    print('df_last_10===========>')
+    print(df_last_10)
+    result = {'predictions': predictions, 'last10': df_last_10.to_dict(orient='records')}
     print(result)
     return result
